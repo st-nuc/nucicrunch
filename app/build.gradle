@@ -1,0 +1,20 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.nucicrunch.app'
+    compileSdk 34
+    defaultConfig {
+        applicationId "com.nucicrunch.app"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "3.0"
+    }
+    // Una sola copia del juego: web/index.html (la misma que se publica en GitHub Pages)
+    sourceSets { main { assets.srcDirs = ['../web'] } }
+    androidResources { noCompress += ['html'] }
+    // Firma fija para que las nuevas versiones se puedan instalar encima de las anteriores
+    signingConfigs { debug { storeFile file('debug.keystore'); storePassword 'android'; keyAlias 'androiddebugkey'; keyPassword 'android' } }
+    buildTypes { release { minifyEnabled false; signingConfig signingConfigs.debug } }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+dependencies { implementation 'androidx.webkit:webkit:1.11.0' }
